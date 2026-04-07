@@ -266,6 +266,9 @@ class Crawler:
             return False
         if parsed.netloc and parsed.netloc != self.server:
             return False
+        
+        if parsed.path.startswith("/accounts/"):
+            return False
         return True
     
     def _extract_links(self, base_url: str, body: str):
