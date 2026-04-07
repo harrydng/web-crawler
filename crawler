@@ -323,7 +323,6 @@ class Crawler:
     # -------------------
     def run(self):
         self.login()
-        print("[DEBUG] Login successful, cookies:", self.cookies, flush=True)
         
         start_path = "/fakebook/"
         self.frontier.append(start_path)
@@ -334,7 +333,6 @@ class Crawler:
         while self.frontier and len(self.flags) < 5:
             path = self.frontier.popleft()
             new_paths = self.crawl_page(path)
-            print(f"[DEBUG] Crawled {path} -> {len(new_paths)} new links, {len(self.flags)} flags so far", flush=True)
 
             
             for p in new_paths:
@@ -342,7 +340,6 @@ class Crawler:
                     self.frontier.append(p)
                     self.visited.add(p)
         
-        print(f"[DEBUG] Done. Visited {len(self.visited)} pages, found {len(self.flags)} flags", flush=True)
         for flag in self.flags:
             print(flag)
         
