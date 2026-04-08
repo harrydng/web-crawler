@@ -74,8 +74,6 @@ def make_tls_socket(server, port):
 
 
 def recv_all(sock):
-    """Read until the server stops sending (handles keep-alive by reading
-    until we've got a complete HTTP response, including chunked bodies)."""
     data = b""
     while True:
         try:
@@ -103,7 +101,7 @@ def parse_response(raw: bytes):
         body_part = b""
 
     header_lines = header_part.decode("utf-8", errors="replace").split("\r\n")
-    status_line = header_lines[0]  # e.g. "HTTP/1.1 200 OK"
+    status_line = header_lines[0]  #"HTTP/1.1 200 OK"
     status_code = int(status_line.split()[1])
 
     headers = {}
@@ -123,7 +121,6 @@ def decode_chunked(data: bytes) -> bytes:
     """Decode HTTP chunked transfer encoding."""
     result = b""
     while data:
-        # Find end of chunk size line
         crlf = data.find(b"\r\n")
         if crlf == -1:
             break
